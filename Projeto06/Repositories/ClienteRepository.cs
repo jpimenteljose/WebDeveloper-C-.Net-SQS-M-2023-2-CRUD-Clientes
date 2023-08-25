@@ -29,6 +29,69 @@ namespace Projeto06.Repositories
                 connection.Execute(query, cliente);
             }
         }
+
+        // método para atualizar um cliente no banco de dados
+        public void Atualizar(Cliente cliente)
+        {
+            var query = @"
+                UPDATE CLIENTE
+                SET CPF = @Cpf,
+                    DATANASCIMENTO = @DataNascimento
+                WHERE ID = @Id
+            ";
+
+            // abrind conexão com o banco de dados
+            using (var connection = new SqlConnection(SQLServerSettings.GetConnectionString()))
+            {
+                // executando o comando SQL no banco de dados
+                connection.Execute(query, cliente);
+            }
+        }
+
+        // método para excluir um cliente do banco de dados
+        public void Excluir(Cliente cliente)
+        {
+            var query = @"
+                DELETE CLIENTE
+                FROM ID = @Id;
+            ";
+
+            // abrindo conexão com o banco de dados
+            using (var connection = new SqlConnection(SQLServerSettings.GetConnectionString()))
+            {
+                // executando o comando SQL no banco de dados
+                connection.Execute(query, cliente);
+            }
+        }
+
+        // método para retornar uma lista com todos os clientes cadastrados
+        public List<Cliente> ObterTodos()
+        {
+            var query = @"
+                SELECT * FROM CLIENTE ORDER BY NOME
+            ";
+
+            // abrindo conexão com o banco de dados
+            using (var connection = new SqlConnection(SQLServerSettings.GetConnectionString()))
+            {
+                return connection.Query<Cliente>(query).ToList();
+            }
+        }
+
+        // método para retornar 1 cliente baseado no ID
+        public Cliente? ObterPorId(Guid Id)
+        {
+            var query = @"
+                SELECT * FROM CLIENTE
+                WHERE ID = @Id
+            ";
+
+            // abrindo conexão com o banco de dados
+            using (var connection = new SqlConnection(SQLServerSettings.GetConnectionString()))
+            {
+                return connection.Query<Cliente>(query, new { @Id = Id }).FirstOrDefault();
+            }
+        }
     }
 }
 
