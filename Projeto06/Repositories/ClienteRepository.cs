@@ -35,7 +35,8 @@ namespace Projeto06.Repositories
         {
             var query = @"
                 UPDATE CLIENTE
-                SET CPF = @Cpf,
+                SET NOME = @Nome,
+                    CPF = @Cpf,
                     DATANASCIMENTO = @DataNascimento
                 WHERE ID = @Id
             ";
@@ -53,7 +54,7 @@ namespace Projeto06.Repositories
         {
             var query = @"
                 DELETE CLIENTE
-                FROM ID = @Id;
+                WHERE ID = @Id;
             ";
 
             // abrindo conexão com o banco de dados
